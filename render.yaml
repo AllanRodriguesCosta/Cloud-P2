@@ -1,0 +1,24 @@
+# Blueprint do Render: um único Web Service que serve a API e o frontend compilado.
+# Nenhum segredo aqui: as variáveis marcadas com sync: false são preenchidas no painel do Render.
+services:
+  - type: web
+    name: cloud-p2
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: AZURE_STORAGE_CONTAINER
+        value: P2_Allan_ribeiro
+      - key: GOOGLE_DRIVE_FOLDER_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON_BASE64
+        sync: false
+      - key: AZURE_STORAGE_CONNECTION_STRING
+        sync: false

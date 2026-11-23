@@ -1,7 +1,7 @@
 # Roadmap — Migração Google Drive para Azure Blob Storage
 
 ## Objetivo
-Criar uma aplicação web que copie arquivos de uma pasta do Google Drive para o contêiner `Aluno_Allan` no Azure Blob Storage, permita listar origem e destino e mostre o resultado de cada transferência.
+Criar uma aplicação web que copie arquivos de uma pasta do Google Drive para o contêiner `P2_Allan_ribeiro` no Azure Blob Storage, permita listar origem e destino e mostre o resultado de cada transferência.
 
 ## Escopo da entrega
 - Interface gráfica com os botões **Listar origem**, **Listar destino** e **Sincronizar**.

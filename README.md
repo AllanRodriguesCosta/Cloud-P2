@@ -180,7 +180,7 @@ Passo a passo:
 3. Em **Environment**, preencha os secrets (nunca no `render.yaml`):
    - `GOOGLE_DRIVE_FOLDER_ID`
    - `GOOGLE_SERVICE_ACCOUNT_JSON_BASE64`
-   - `AZURE_STORAGE_CONNECTION_STRING`
+   - `AZURE_STORAGE_CONNECTION_STRING` **ou** `AZURE_STORAGE_SAS_URL`
 4. Faça o deploy e abra `https://<seu-servico>.onrender.com`. Teste `.../api/health`, depois **Listar origem**, **Listar destino** e **Sincronizar**.
 
 No plano gratuito, o serviço "dorme" após um tempo sem acesso. A primeira requisição depois disso pode levar uns 50 segundos.

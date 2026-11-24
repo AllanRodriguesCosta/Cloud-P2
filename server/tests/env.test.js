@@ -41,7 +41,7 @@ describe("validação de ambiente", () => {
     const text = problemsOf({});
     expect(text).toContain("GOOGLE_DRIVE_FOLDER_ID");
     expect(text).toContain("GOOGLE_SERVICE_ACCOUNT_JSON_BASE64");
-    expect(text).toContain("AZURE_STORAGE_CONNECTION_STRING");
+    expect(text).toContain("AZURE_STORAGE_CONNECTION_STRING ou AZURE_STORAGE_SAS_URL");
   });
 
   it("recusa o placeholder do .env.example e URLs no lugar do ID", () => {
@@ -70,6 +70,19 @@ describe("validação de ambiente", () => {
     expect(text).toContain("PORT");
     expect(text).toContain("AZURE_STORAGE_CONTAINER");
     expect(text).not.toContain("segredo-qualquer");
+  });
+
+  it("aceita URL SAS como alternativa à Connection String sem expô-la na configuração pública", () => {
+    const sasUrl = "https://contaficticia.blob.core.windows.net/?sv=2026-01-01&sig=falso";
+    const config = loadConfig(validEnv({ AZURE_STORAGE_CONNECTION_STRING: "", AZURE_STORAGE_SAS_URL: sasUrl }));
+    expect(config.azureSasUrl).toBe(sasUrl);
+    expect(JSON.stringify(publicConfig(config))).not.toContain(sasUrl);
+  });
+
+  it("recusa URL SAS malformada sem vazar o valor", () => {
+    const text = problemsOf(validEnv({ AZURE_STORAGE_SAS_URL: "segredo-invalido" }));
+    expect(text).toContain("AZURE_STORAGE_SAS_URL");
+    expect(text).not.toContain("segredo-invalido");
   });
 
   it("aceita GOOGLE_APPLICATION_CREDENTIALS como alternativa local", () => {

@@ -30,9 +30,10 @@ export function translateAzureError(err) {
 }
 
 /** Cria o ContainerClient oficial (@azure/storage-blob). A Connection String nunca sai do backend. */
-export async function createContainerClient(connectionString, containerName) {
+export async function createContainerClient({ connectionString, sasUrl, containerName }) {
   const { BlobServiceClient } = await import("@azure/storage-blob");
-  return BlobServiceClient.fromConnectionString(connectionString).getContainerClient(containerName);
+  const service = sasUrl ? new BlobServiceClient(sasUrl) : BlobServiceClient.fromConnectionString(connectionString);
+  return service.getContainerClient(containerName);
 }
 
 /** Metadados do Azure aceitam apenas ASCII: valores são codificados. */

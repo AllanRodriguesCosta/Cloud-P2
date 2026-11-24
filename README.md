@@ -72,11 +72,12 @@ npm run dev:client   # frontend em http://localhost:5173, com proxy de /api para
 | `GOOGLE_DRIVE_FOLDER_ID` | sim | Só o ID da pasta: em `https://drive.google.com/drive/folders/ABC123`, é `ABC123`. |
 | `GOOGLE_SERVICE_ACCOUNT_JSON_BASE64` | sim* | O JSON da Service Account em Base64, numa linha. É decodificado só em memória. |
 | `GOOGLE_APPLICATION_CREDENTIALS` | sim* | Alternativa local: caminho do JSON, por exemplo `./secrets/service-account.json`. |
-| `AZURE_STORAGE_CONNECTION_STRING` | sim | Portal do Azure → conta de armazenamento → *Chaves de acesso* → Connection string. |
+| `AZURE_STORAGE_CONNECTION_STRING` | sim* | Portal do Azure → conta de armazenamento → *Chaves de acesso* → Connection string. |
+| `AZURE_STORAGE_SAS_URL` | sim* | Alternativa à Connection String: URL SAS da conta de armazenamento, somente no backend. |
 | `AZURE_STORAGE_CONTAINER` | não | Padrão `P2_Allan_ribeiro` (veja a nota sobre o nome abaixo). |
 | `CORS_ORIGIN` | não | Origem liberada em desenvolvimento (`http://localhost:5173`). Aceita várias, separadas por vírgula. |
 
-\* Use uma das duas. Se as duas existirem, vale a Base64.
+\* Para Google, use uma das duas opções de credencial; se ambas existirem, vale a Base64. Para Azure, use uma Connection String ou uma URL SAS; a URL SAS tem prioridade se as duas existirem.
 
 Para gerar a Base64 do JSON:
 

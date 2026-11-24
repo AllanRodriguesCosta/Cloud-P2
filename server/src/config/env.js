@@ -91,10 +91,13 @@ export function loadConfig(env = process.env, { cwd = process.cwd() } = {}) {
   }
 
   const azureConnectionString = value("AZURE_STORAGE_CONNECTION_STRING");
-  if (!azureConnectionString) {
-    problems.push("AZURE_STORAGE_CONNECTION_STRING é obrigatório.");
-  } else if (!/(AccountName=|BlobEndpoint=)/i.test(azureConnectionString)) {
+  const azureSasUrl = value("AZURE_STORAGE_SAS_URL");
+  if (!azureConnectionString && !azureSasUrl) {
+    problems.push("Defina AZURE_STORAGE_CONNECTION_STRING ou AZURE_STORAGE_SAS_URL.");
+  } else if (azureConnectionString && !/(AccountName=|BlobEndpoint=)/i.test(azureConnectionString)) {
     problems.push("AZURE_STORAGE_CONNECTION_STRING não parece uma Connection String do Azure Storage.");
+  } else if (azureSasUrl && !/^https:\/\/.+\?.+/i.test(azureSasUrl)) {
+    problems.push("AZURE_STORAGE_SAS_URL deve ser uma URL HTTPS com token SAS.");
   }
 
   const containerRequested = value("AZURE_STORAGE_CONTAINER") || REQUIRED_CONTAINER;
@@ -119,6 +122,7 @@ export function loadConfig(env = process.env, { cwd = process.cwd() } = {}) {
     driveFolderId,
     googleCredentials,
     azureConnectionString,
+    azureSasUrl,
     containerRequested,
     containerName,
     corsOrigin,

@@ -23,7 +23,11 @@ async function main() {
   }
 
   const drive = await createDriveClient(config.googleCredentials);
-  const containerClient = await createContainerClient(config.azureConnectionString, config.containerName);
+  const containerClient = await createContainerClient({
+    connectionString: config.azureConnectionString,
+    sasUrl: config.azureSasUrl,
+    containerName: config.containerName,
+  });
   const driveService = createGoogleDriveService({ folderId: config.driveFolderId, drive });
   const blobService = createAzureBlobService({ containerClient });
   const syncService = createSyncService({ drive: driveService, blob: blobService });

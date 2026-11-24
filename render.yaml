@@ -15,7 +15,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: AZURE_STORAGE_CONTAINER
-        value: P2_Allan_ribeiro
+        value: p2-allan-ribeiro
       - key: GOOGLE_DRIVE_FOLDER_ID
         sync: false
       - key: GOOGLE_SERVICE_ACCOUNT_JSON_BASE64
